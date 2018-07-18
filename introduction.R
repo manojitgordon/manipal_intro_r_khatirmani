@@ -154,3 +154,50 @@ for (g in odi$Ground){
   }
 }
 g_count
+
+#playerwise total runs and sachin average
+
+req_player="Sachin R Tendulkar"
+total_runs=0
+count=0
+for(r_no in seq(1,nrow(odi))){
+  c_player=odi$Player[r_no]
+  c_runs=odi$Runs[r_no]
+  
+  if(c_player==req_player){
+  total_runs=total_runs+c_runs
+  count=count+1
+  
+  }
+}
+avg_run=total_runs/count
+
+### Centuries by Sachin
+player_name="Sachin R Tendulkar"
+cent=0
+for (p in seq(1,nrow(odi))){
+  if(odi$Player[p]==player_name & odi$Runs[p]>99){
+    cent=cent+1
+  }
+}
+## Working with Dates
+
+x="2010-10-21"
+class(x)
+y<-as.Date(x,"%Y-%m-%d")
+class(y)
+format(y,"%B") # Full month name
+format(y,"%b") # Short form month name
+format(y,"%Y") # Full Year
+format(y,"%A") # Full day of the Week
+format(y,"%a") #Short form for day
+format (y,"%m-%Y") #month and year
+
+
+##Assignments::
+## For sachin yearwise total runs,centuries,total ducks ,total fifties...  
+  
+  
+
+
+
