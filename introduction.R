@@ -93,3 +93,5 @@ for (country in odi$Country){
   }
     
 }
+print(countries)
+
