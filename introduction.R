@@ -86,7 +86,7 @@ countries=c()
 
 for (country in odi$Country){
   if(country%in%countries){
-    next
+    next()
   }
   else{
     countries<-c(countries,country)
@@ -95,3 +95,62 @@ for (country in odi$Country){
 }
 print(countries)
 
+
+# unique players
+
+players<-c()
+
+for (p in odi$Player){
+  if(p %in% players){
+    next()
+  }else{
+    players<-c(players,p)
+  }
+}
+print(players)
+length(players)
+
+
+# matches sachin appered in
+
+player="Sachin R Tendulkar"
+s_count=0
+for (pl_s in odi$Player){
+  if (pl_s==player){
+    s_count=s_count+1
+  }else{
+    next()
+  }
+}
+print(s_count)
+## list containing players and corresponding matches
+
+u_players_matches<-list()
+
+for(pl in odi$Player){
+    if(pl %in% labels(u_players_matches)){
+      u_players_matches[pl]=u_players_matches[pl][[1]]+1
+    }
+    else{
+      u_players_matches[pl]=1;
+    }
+}
+
+print(u_players_matches)
+
+
+#nubers of matches played in sharjah
+
+View(odi$Ground)
+
+
+ground="Sharjah CA Stadium"
+g_count=0
+for (g in odi$Ground){
+  if (g==ground){
+    s_count=s_count+1
+  }else{
+    next()
+  }
+}
+g_count
