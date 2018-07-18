@@ -197,7 +197,50 @@ format (y,"%m-%Y") #month and year
 ##Assignments::
 ## For sachin yearwise total runs,centuries,total ducks ,total fifties...  
   
-  
+pl_name="Sachin R Tendulkar"  
+y_total_runs<-list()
+y_cent<-list()
+y_ducks<-list()
+y_fifties<-list()
 
-
-
+for (p in seq(1:nrow(odi))){
+  if(odi$Player[p]==pl_name){
+    
+    y_d<-(as.Date(odi$MatchDate[p],"%m-%d-%Y"))
+    y<-format(y_d,"%Y")
+    
+    #if block for yearly total runs
+    
+    if(y %in% labels(y_total_runs)){
+      y_total_runs[y]=y_total_runs[y][[1]]+odi$Runs[p]
+    }else{
+      y_total_runs[y]=odi$Runs[p]
+    }
+    if(odi$Runs[p]>99){
+      if(y %in% labels(y_cent)){
+          y_cent[y]=y_cent[y][[1]]+1                               
+          
+      }else{
+        y_cent[y]=1
+      }
+    }
+    if(odi$Runs[p]==0){
+      if(y %in% labels(y_ducks)){
+        y_ducks[y]=y_ducks[y][[1]]+1
+      }else{
+        y_ducks[y]=1
+      }
+    }
+    if(odi$Runs[p]>49 & odi$Runs[p]<100){
+      if(y %in% labels(y_fifties)){
+        y_fifties[y]=y_fifties[[y]][1]+1
+      }else{
+        y_fifties[y]=1
+      }
+    }
+  }
+}
+y_total_runs
+y_cent
+y_ducks
+y_fifties
