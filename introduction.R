@@ -205,7 +205,7 @@ y_fifties<-list()
 
 for (p in seq(1:nrow(odi))){
   if(odi$Player[p]==pl_name){
-    
+      
     y_d<-(as.Date(odi$MatchDate[p],"%m-%d-%Y"))
     y<-format(y_d,"%Y")
     
@@ -244,3 +244,75 @@ y_total_runs
 y_cent
 y_ducks
 y_fifties
+############################################################################################
+
+
+install.packages("dplyr")
+library(dplyr)
+
+odi1=read.csv("datasets/odi-batting.csv")
+View(odi1)
+str(odi1)
+dim(odi1)
+## Filter the data for Sachin R Tendulkar
+sachin<-filter(odi1,Player=="Sachin R Tendulkar")
+
+dim(sachin)
+### centuries of Sachin R Tendulkar
+
+sachin_cent<-filter(odi1,Player=="Sachin R Tendulkar",Runs>99)
+sachin_cent
+dim(sachin_cent)
+
+## Players "Sachin R Tendulkar" and "Ricky T Ponting"
+
+S_R<-filter(odi1,Player=="Sachin R Tendulkar"| Player=="Ricky T Ponting")
+
+dim(S_R)
+
+## Sachin R Tendulkar Versus Australia scoring 100s
+
+S_100_Aus<-filter(odi1,Player=="Sachin R Tendulkar", Versus=="Australia",Runs>99)
+dim(S_100_Aus)
+
+## Using %in% pipeline function
+
+##Method 1
+
+player_vec<-c("Sachin R Tendulkar","Sourav C Ganguly","Ricky T Ponting")
+
+player_vec
+
+filter_players<-filter(odi1,Player %in% player_vec)
+
+View(filter_players)
+
+#Method 2
+filter_players1<-filter(odi1,Player %in% c("Sachin R Tendulkar","Sourav C Ganguly","Ricky T Ponting"))
+
+View(filter_players1)
+
+##Top 10 batsmen based on Runs
+
+top_10<-odi1%>%
+  group_by(Player)%>%
+  summarise(Total_Runs=sum(Runs,na.rm=T))%>%
+  arrange(desc(Total_Runs))
+top_10[1:10,]
+
+top_10_grounds_runs<-odi1%>%
+  group_by(Ground)%>%
+  summarise(Total_Runs=sum(Runs,na.rm=T))%>%
+  arrange(-Total_Runs)%>% head(10)
+
+top_10_ground_matches<-odi1%>%
+  group_by(Ground)%>%
+  summarise(Total_matches=n_distinct(MatchDate))%>%
+  arrange(-Total_matches)
+top_10_ground_matches[1:10,]
+
+top_10_avg<-odi1%>%
+  group_by(Player)%>%
+  summarise(Total_runs=sum(Runs,na.rm=T),Avg_scr_rate=round(mean(ScoreRate,na.rm=T),2))%>%
+  arrange(desc(Avg_scr_rate))
+top_10_avg[1:10,]
